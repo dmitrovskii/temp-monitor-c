@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#define len(x) (sizeof(x) / sizeof((x)[0]))
+
 struct TempStats {
     float current;
     float average;
@@ -61,13 +63,18 @@ double average(double temp_list[], size_t size) {
 }
 
 int main() {
+    double maximum, minimum;
+    maximum = minimum = get_temperature();
 
     while (1) {
 
         double value = get_temperature();
 
+        if (value > maximum) {maximum = value;}
+        if (value < minimum) {minimum = value;}
+
         if (value != -1.0) {
-            printf("TEMP: %.2f°C\n", value);
+            printf("TEMP: %.2f | MIN: %.2f | MAX: %.2f\n", value, minimum, maximum);
         }
 
         fflush(stdout);
