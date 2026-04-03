@@ -52,6 +52,14 @@ double get_temperature() {
     return raw_temp / 1000.0;
 }
 
+double average(double temp_list[], size_t size) {
+    double summa = 0.0;
+    for (int i = 0; i < size; i++) {
+        summa = summa + temp_list[i];
+    }
+    return summa / size;
+}
+
 int main() {
 
     while (1) {
