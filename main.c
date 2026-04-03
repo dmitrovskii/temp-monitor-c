@@ -2,11 +2,37 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+struct TempStats {
+    float current;
+    float average;
+    float min;
+    float max;
+};
+
 void clear(int value) {
     for (int i = 0; i < value; i++) {
         printf("\x1b[1A\x1b[2K");
     }
     fflush(stdout);
+}
+
+void save_logs(struct TempStats data[], int count) {
+    FILE *fptr;
+    fptr = fopen("logs.txt", "a");
+
+    if (fptr == NULL) {
+        printf("Error open file!\n");
+        return;
+    }
+
+    for (int i = 0; i < count; i++) {
+        fprintf(fptr, "TEMP: %.2f | AVG: %.2f | MIN: %.2f | MAX: %.2f\n", 
+            data[i].current,
+            data[i].average,
+            data[i].min,
+            data[i].max);
+    }
+    fclose(fptr);
 }
 
 double temperature() {
