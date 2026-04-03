@@ -9,7 +9,7 @@ struct TempStats {
     float max;
 };
 
-void clear(int value) {
+void clear_string(int value) {
     for (int i = 0; i < value; i++) {
         printf("\x1b[1A\x1b[2K");
     }
@@ -35,7 +35,7 @@ void save_logs(struct TempStats data[], int count) {
     fclose(fptr);
 }
 
-double temperature() {
+double get_temperature() {
     FILE *fptr;
     int raw_temp;
     
@@ -56,7 +56,7 @@ int main() {
 
     while (1) {
 
-        double value = temperature();
+        double value = get_temperature();
 
         if (value != -1.0) {
             printf("TEMP: %.2f°C\n", value);
@@ -64,7 +64,7 @@ int main() {
 
         fflush(stdout);
         sleep(1);
-        clear(1);
+        clear_string(1);
     }
 
     return 0;
